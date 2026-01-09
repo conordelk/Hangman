@@ -14,14 +14,34 @@ num_letters = len(initial_word)
 # Create a list to show guessed letters, start with underscores
 letter_marks = ["_"] * num_letters
 
+letters_guessed = []
 
-print("Welcome to Hangman!")
+
+print('Welcome to Hangman! (Press "0" to exit)')
+
+print(letter_marks)
 
 # Main game loop - keep running until player wins or loses
 while True:
 
     # Get a letter guess from the player
     guess = input("Make a Guess, NOW: ")
+
+    if guess == "0":
+        break
+
+    if guess in letters_guessed:
+        print("Already guessed. Choose another letter.")
+        print()
+        print()
+        continue
+
+
+    if guess == initial_word:
+        print("You guessed the word!!")
+        break
+
+    letters_guessed.append(guess)
 
     # Check if the guessed letter is in the word
     in_word = False
@@ -31,13 +51,21 @@ while True:
             letter_marks[i] = guess
             in_word = True
     
+ # Display current progress
+    print(letter_marks)
+
     # If letter is not in word, lose a life
     if not in_word:
         lives -=1
+        print("Lives remaining:", lives)
+
+
+    print(letters_guessed)
 
     # Check if player is out of lives
     if lives == 0:
         print("YOU LOSE")
+        print(initial_word)
         break
 
     # Check if all letters have been guessed
@@ -52,5 +80,5 @@ while True:
         print("YOU WIN!!!")
         break
         
-    # Display current progress
-    print(letter_marks)
+    print()
+    print()
